@@ -1,0 +1,14 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule . index.php [L]
+
+Options All -Indexes
+
+ErrorDocument 400 /~snipghost/project/engine/error.php?code=400
+ErrorDocument 401 /~snipghost/project/engine/error.php?code=401
+ErrorDocument 403 /~snipghost/project/engine/error.php?code=403
+ErrorDocument 404 /~snipghost/project/engine/error.php?code=404
+ErrorDocument 500 /~snipghost/project/engine/error.php?code=500

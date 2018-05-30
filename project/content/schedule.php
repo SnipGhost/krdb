@@ -1,0 +1,13 @@
+<?php 
+
+	if ($_SESSION['Тип'] == 0) {
+        printf('<h3>Расписание %s класса:</h3><br>', getClassName($mysqli, $mysqli->real_escape_string($_SESSION['Класс_ID'])));
+		$q = "SELECT T.`Время_занятия`, GROUP_CONCAT(IF(S.`День_недели` = '1. ПН', P.`Наименование`, NULL)) AS 'ПН', GROUP_CONCAT(IF(S.`День_недели` = '2. ВТ', P.`Наименование`, NULL)) AS 'ВТ', GROUP_CONCAT(IF(S.`День_недели` = '3. СР', P.`Наименование`, NULL)) AS 'СР', GROUP_CONCAT(IF(S.`День_недели` = '4. ЧТ', P.`Наименование`, NULL)) AS 'ЧТ', GROUP_CONCAT(IF(S.`День_недели` = '5. ПТ', P.`Наименование`, NULL)) AS 'ПТ', GROUP_CONCAT(IF(S.`День_недели` = '6. СБ', P.`Наименование`, NULL)) AS 'СБ' FROM `Занятия` AS S INNER JOIN Классы AS C ON S.`Класс_ID` = C.`Класс_ID` INNER JOIN Предметы AS P ON S.`Предмет_ID` = P.`Предмет_ID` INNER JOIN Кабинеты AS K ON S.`Кабинет_ID` = K.`Кабинет_ID` INNER JOIN Время AS T ON S.`Время_ID` = T.`Время_ID` INNER JOIN Пользователи AS U ON S.`Класс_ID` = U.`Класс_ID` INNER JOIN Подгруппы AS G ON S.`Подгруппа_ID` = G.`Подгруппа_ID` WHERE ((U.`ФИО` = '".$_SESSION['ФИО']."') AND ((S.`Подгруппа_ID`) = U.`Подгруппа_ID` OR (S.`Подгруппа_ID`) = 8 OR (S.`Подгруппа_ID`) IS NULL)) GROUP BY T.`Время_занятия`";
+		printTableForm($mysqli, $q);
+	} else {
+        printf('<h3>Ваше расписание:</h3><br>');
+		$q = "SELECT T.`Время_занятия`, GROUP_CONCAT(IF(S.`День_недели` = '1. ПН', CONCAT(P.`Наименование`, ' ', C.`Год_обучения`, C.`Буква_класса`), NULL)) AS 'ПН', GROUP_CONCAT(IF(S.`День_недели` = '2. ВТ', CONCAT(P.`Наименование`, ' ', C.`Год_обучения`, C.`Буква_класса`), NULL)) AS 'ВТ', GROUP_CONCAT(IF(S.`День_недели` = '3. СР', CONCAT(P.`Наименование`, ' ', C.`Год_обучения`, C.`Буква_класса`), NULL)) AS 'СР', GROUP_CONCAT(IF(S.`День_недели` = '4. ЧТ', CONCAT(P.`Наименование`, ' ', C.`Год_обучения`, C.`Буква_класса`), NULL)) AS 'ЧТ', GROUP_CONCAT(IF(S.`День_недели` = '5. ПТ', CONCAT(P.`Наименование`, ' ', C.`Год_обучения`, C.`Буква_класса`), NULL)) AS 'ПТ', GROUP_CONCAT(IF(S.`День_недели` = '6. СБ', CONCAT(P.`Наименование`, ' ', C.`Год_обучения`, C.`Буква_класса`), NULL)) AS 'СБ' FROM `Занятия` AS S INNER JOIN Классы AS C ON S.`Класс_ID` = C.`Класс_ID` INNER JOIN Предметы AS P ON S.`Предмет_ID` = P.`Предмет_ID` INNER JOIN Время AS T ON S.`Время_ID` = T.`Время_ID` INNER JOIN Пользователи AS U ON S.`Учитель_ID` = U.`Пользователь_ID` WHERE (U.`ФИО` = '".$_SESSION['ФИО']."') GROUP BY T.`Время_занятия`";
+		printTableForm($mysqli, $q);
+	}
+	
+?>

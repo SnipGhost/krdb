@@ -1,0 +1,51 @@
+﻿.container {
+    display: block;
+}
+
+#chart, #chartData {
+  border: 1px solid #fff;
+  background: #fff repeat-x 0 0;
+}
+
+#chart {
+    display: block;
+    cursor: pointer;
+    border-radius: 20px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    color: black;
+    -moz-transition: all 1s linear;
+    -o-transition: all 1s linear;
+    -webkit-transition: all 1s linear;
+}
+
+#chartData {
+  width: 300px;
+  border-collapse: collapse;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#chartData th, #chartData td {
+  padding: 0.5em;
+  border: 1px dotted #666;
+  text-align: left;
+}
+
+#chartData th {
+  color: #000;
+  border-bottom: 2px solid #333;
+  text-transform: uppercase;
+}
+
+#chartData td {
+  cursor: pointer;
+}
+
+#chartData td.highlight {
+  background: #dddddd;
+}
+
+#chartData tr:hover td {
+  background: #cccccc;
+}
